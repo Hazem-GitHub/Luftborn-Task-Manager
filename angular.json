@@ -35,6 +35,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/Luftborn-Task-Manager/",
               "budgets": [
                 {
                   "type": "initial",
