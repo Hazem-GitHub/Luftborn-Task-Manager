@@ -49,16 +49,18 @@ jobs:
           fi
           echo "Found output directory: ${{ steps.find-output.outputs.output_dir }}"
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./${{ steps.find-output.outputs.output_dir }}
+
       - name: Deploy to GitHub Pages
         id: deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: actions/deploy-pages@v4
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./${{ steps.find-output.outputs.output_dir }}
-          cname: false
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
 
       # Alternative: Deploy to Vercel (uncomment and configure if needed)
       # - name: Deploy to Vercel
