@@ -49,6 +49,11 @@ jobs:
           fi
           echo "Found output directory: ${{ steps.find-output.outputs.output_dir }}"
 
+      - name: Create 404.html for SPA routing
+        run: |
+          cp ${{ steps.find-output.outputs.output_dir }}/index.html ${{ steps.find-output.outputs.output_dir }}/404.html
+          echo "Created 404.html for GitHub Pages SPA routing support"
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
