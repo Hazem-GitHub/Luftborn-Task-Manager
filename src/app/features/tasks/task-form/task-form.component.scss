@@ -228,7 +228,7 @@
 
       // Subscript (error text)
       .mat-mdc-form-field-subscript-wrapper {
-        margin-top: 4px!important;
+        margin-top: 4px !important;
       }
 
       .mat-mdc-form-field-error {
@@ -236,13 +236,12 @@
         font-size: 11px;
       }
 
-      .mat-mdc-form-field-infix{
+      .mat-mdc-form-field-infix {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
         gap: 4px;
-
       }
 
       // Chip input field styling
@@ -258,11 +257,11 @@
       }
 
       // Chip grid styling
-      .mat-mdc-chip-grid[tabindex="0"] {
+      .mat-mdc-chip-grid[tabindex='0'] {
         min-height: 32px;
         padding: 4px 0;
       }
-      .mat-mdc-chip-grid[tabindex="-1"] {
+      .mat-mdc-chip-grid[tabindex='-1'] {
         min-height: 0;
         padding: 0;
       }
@@ -487,4 +486,3 @@
     }
   }
 }
-

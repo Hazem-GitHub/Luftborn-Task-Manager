@@ -1,5 +1,14 @@
 <div class="main-layout">
-  <div class="sidebar-overlay" [class.active]="sidebarOpen()" (click)="toggleSidebar()"></div>
+  <div
+    class="sidebar-overlay"
+    [class.active]="sidebarOpen()"
+    (click)="toggleSidebar()"
+    (keyup.enter)="toggleSidebar()"
+    (keyup.space)="toggleSidebar()"
+    tabindex="0"
+    role="button"
+    aria-label="Close sidebar"
+  ></div>
   <app-header (menuToggle)="toggleSidebar()"></app-header>
   <div class="layout-body">
     <app-sidebar [isOpen]="sidebarOpen()"></app-sidebar>
@@ -10,4 +19,3 @@
     </div>
   </div>
 </div>
-

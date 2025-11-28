@@ -1,17 +1,26 @@
 <mat-card class="statistics-card">
   <mat-card-content>
     <div class="card-header">
-      <div class="icon-wrapper" [style.background-color]="statistic.color + '15'" [style.border-color]="statistic.color + '40'">
+      <div
+        class="icon-wrapper"
+        [style.background-color]="statistic.color + '15'"
+        [style.border-color]="statistic.color + '40'"
+      >
         <mat-icon class="icon" [style.color]="statistic.color">{{ statistic.icon }}</mat-icon>
       </div>
       <span class="title">{{ statistic.title }}</span>
     </div>
     <div class="card-value">{{ statistic.value }}</div>
     <div class="card-change" [class]="'change-' + statistic.changeType">
-      <mat-icon class="change-icon">{{ statistic.changeType === 'positive' ? 'trending_up' : statistic.changeType === 'negative' ? 'trending_down' : 'remove' }}</mat-icon>
+      <mat-icon class="change-icon">{{
+        statistic.changeType === 'positive'
+          ? 'trending_up'
+          : statistic.changeType === 'negative'
+            ? 'trending_down'
+            : 'remove'
+      }}</mat-icon>
       <span class="change-value">{{ statistic.change }}</span>
       <span class="change-label">{{ statistic.changeLabel }}</span>
     </div>
   </mat-card-content>
 </mat-card>
-

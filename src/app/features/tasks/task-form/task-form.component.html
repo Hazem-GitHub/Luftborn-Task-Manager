@@ -13,7 +13,12 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <textarea matInput formControlName="description" rows="4" placeholder="Description"></textarea>
+      <textarea
+        matInput
+        formControlName="description"
+        rows="4"
+        placeholder="Description"
+      ></textarea>
       @if (taskForm.get('description')?.hasError('required')) {
         <mat-error>{{ getErrorMessage('description') }}</mat-error>
       }
@@ -39,7 +44,13 @@
 
     <div class="form-row">
       <mat-form-field appearance="outline">
-        <input matInput [matDatepicker]="picker" formControlName="dueDate" placeholder="Due Date" (focus)="onDueDateFocus()" />
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="dueDate"
+          placeholder="Due Date"
+          (focus)="onDueDateFocus()"
+        />
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         @if (taskForm.get('dueDate')?.hasError('pastDate')) {
@@ -79,9 +90,14 @@
 
 <mat-dialog-actions align="end" class="dialog-actions">
   <button mat-button (click)="onCancel()" class="cancel-btn">Cancel</button>
-  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!taskForm.valid" class="submit-btn">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSubmit()"
+    [disabled]="!taskForm.valid"
+    class="submit-btn"
+  >
     <mat-icon>{{ isEditMode ? 'save' : 'add' }}</mat-icon>
     {{ isEditMode ? 'Update' : 'Create' }}
   </button>
 </mat-dialog-actions>
-

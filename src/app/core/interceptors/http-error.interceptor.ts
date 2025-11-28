@@ -1,5 +1,4 @@
 import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
-import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 
 /**
@@ -39,7 +38,6 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
 
       console.error('HTTP Error:', errorMessage);
       return throwError(() => new Error(errorMessage));
-    })
+    }),
   );
 };
-

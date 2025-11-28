@@ -1,4 +1,13 @@
-<div class="kanban-column" [class.status-todo]="status === 'todo'" [class.status-in-progress]="status === 'in_progress'" [class.status-done]="status === 'done'" cdkDropList [cdkDropListData]="tasks" [id]="status" (cdkDropListDropped)="onTaskDropped($event)">
+<div
+  class="kanban-column"
+  [class.status-todo]="status === 'todo'"
+  [class.status-in-progress]="status === 'in_progress'"
+  [class.status-done]="status === 'done'"
+  cdkDropList
+  [cdkDropListData]="tasks"
+  [id]="status"
+  (cdkDropListDropped)="onTaskDropped($event)"
+>
   <div class="column-header">
     <div class="column-title-wrapper">
       <mat-icon class="column-icon">{{ getStatusIcon() }}</mat-icon>
@@ -19,4 +28,3 @@
     }
   </div>
 </div>
-

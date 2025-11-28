@@ -8,24 +8,44 @@ import {
   computed,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { StatisticsService, TaskService, UserService, SearchService } from '../../core/services';
 import { StatisticsCardComponent } from './statistics-card/statistics-card.component';
 import { TaskFiltersComponent } from '../tasks/task-filters/task-filters.component';
 import { TaskBoardComponent } from '../tasks/task-board/task-board.component';
 import { TaskFormComponent } from '../tasks/task-form/task-form.component';
-import { Task, TaskStatus, TaskPriority, TaskFilter } from '../../types';
+import { Task, TaskFilter, TaskStatus, TaskPriority } from '../../types';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 /**
  * Dashboard Component (Smart/Container)
- * Main dashboard page displaying statistics and tasks
+ *
+ * Main dashboard page that displays task statistics and a filtered Kanban board.
+ * Combines statistics cards with task management functionality.
+ *
+ * Features:
+ * - Statistics cards showing task metrics
+ * - Task filtering by status and priority
+ * - Global search integration
+ * - Kanban board with drag-and-drop
+ * - Task creation via dialog
+ *
+ * @example
+ * ```typescript
+ * // Component automatically loads data on init
+ * // All data is reactive through signals
+ *
+ * // Access statistics
+ * const stats = this.statistics(); // Signal
+ *
+ * // Access filtered tasks
+ * const tasks = this.filteredTasks(); // Signal
+ * ```
+ *
+ * @see {@link StatisticsCardComponent} for statistics display
+ * @see {@link TaskFiltersComponent} for filter UI
+ * @see {@link TaskBoardComponent} for Kanban board
  */
 @Component({
   selector: 'app-dashboard',
@@ -82,7 +102,7 @@ export class DashboardComponent implements OnInit {
       tasks = tasks.filter(
         (task) =>
           task.title.toLowerCase().includes(search) ||
-          task.description.toLowerCase().includes(search)
+          task.description.toLowerCase().includes(search),
       );
     }
 
@@ -91,13 +111,13 @@ export class DashboardComponent implements OnInit {
 
   // Tasks grouped by status
   readonly todoTasks = computed(() =>
-    this.filteredTasks().filter((task) => task.status === 'todo')
+    this.filteredTasks().filter((task) => task.status === 'todo'),
   );
   readonly inProgressTasks = computed(() =>
-    this.filteredTasks().filter((task) => task.status === 'in_progress')
+    this.filteredTasks().filter((task) => task.status === 'in_progress'),
   );
   readonly doneTasks = computed(() =>
-    this.filteredTasks().filter((task) => task.status === 'done')
+    this.filteredTasks().filter((task) => task.status === 'done'),
   );
 
   ngOnInit(): void {
@@ -149,7 +169,7 @@ export class DashboardComponent implements OnInit {
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex
+        event.currentIndex,
       );
 
       // Update task status
@@ -213,4 +233,3 @@ export class DashboardComponent implements OnInit {
     return 'done';
   }
 }
-

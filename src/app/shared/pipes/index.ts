@@ -3,4 +3,3 @@
  */
 export * from './relative-time.pipe';
 export * from './priority-label.pipe';
-

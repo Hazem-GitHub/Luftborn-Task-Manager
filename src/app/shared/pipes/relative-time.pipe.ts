@@ -1,15 +1,49 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { formatDistanceToNow, format, isPast, differenceInDays, startOfDay } from 'date-fns';
+import { format, differenceInDays, startOfDay } from 'date-fns';
 
 /**
  * Relative Time Pipe
- * Formats dates as relative time (e.g., "2 days ago", "Due in 3 days")
+ *
+ * Formats dates as human-readable relative time strings. Supports both
+ * due dates and completion dates with different formatting based on the
+ * prefix parameter.
+ *
+ * For due dates:
+ * - "Due today", "Due tomorrow", "Due in X days", "Overdue by X days"
+ *
+ * For completed dates (with prefix='completed'):
+ * - "today", "yesterday", "X days ago", "X weeks ago", "on [date]"
+ *
+ * @example
+ * ```html
+ * <!-- Due date -->
+ * {{ task.dueDate | relativeTime }}
+ *
+ * <!-- Completed date -->
+ * {{ task.completedAt | relativeTime:'completed' }}
+ * ```
+ *
+ * @example
+ * ```typescript
+ * const pipe = new RelativeTimePipe();
+ * pipe.transform('2025-12-31'); // "Due in 5 days"
+ * pipe.transform('2025-11-20', 'completed'); // "2 days ago"
+ * ```
  */
 @Pipe({
   name: 'relativeTime',
   standalone: true,
 })
 export class RelativeTimePipe implements PipeTransform {
+  /**
+   * Transform a date value to a relative time string
+   *
+   * @param value - Date string (YYYY-MM-DD or ISO) or Date object
+   * @param prefix - Optional prefix to control formatting:
+   *                 - '' (default): Format as due date
+   *                 - 'completed': Format as completion date
+   * @returns Formatted relative time string
+   */
   transform(value: string | Date, prefix: string = ''): string {
     if (!value) return '';
 
@@ -74,4 +108,3 @@ export class RelativeTimePipe implements PipeTransform {
     return format(date, 'MMM d, yyyy');
   }
 }
-

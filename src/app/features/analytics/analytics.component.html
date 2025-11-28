@@ -9,22 +9,25 @@
     <div class="charts-grid">
       <div class="chart-card">
         <h2>Tasks by Priority</h2>
-        <canvas baseChart
+        <canvas
+          baseChart
           [data]="priorityChartData"
           [type]="priorityChartType"
-          [options]="priorityChartOptions">
+          [options]="priorityChartOptions"
+        >
         </canvas>
       </div>
 
       <div class="chart-card">
         <h2>Tasks by Status</h2>
-        <canvas baseChart
+        <canvas
+          baseChart
           [data]="statusChartData"
           [type]="statusChartType"
-          [options]="statusChartOptions">
+          [options]="statusChartOptions"
+        >
         </canvas>
       </div>
     </div>
   }
 </div>
-

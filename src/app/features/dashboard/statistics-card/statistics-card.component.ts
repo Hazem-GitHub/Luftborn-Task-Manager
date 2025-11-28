@@ -19,4 +19,3 @@ import { StatisticsItem } from '../../../types';
 export class StatisticsCardComponent {
   @Input({ required: true }) statistic!: StatisticsItem;
 }
-

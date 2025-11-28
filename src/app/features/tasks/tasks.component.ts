@@ -20,7 +20,33 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 
 /**
  * Tasks Component (Smart/Container)
- * Main tasks page with Kanban board and filtering
+ *
+ * Main tasks page component that displays tasks in a Kanban board layout.
+ * Handles task filtering, search, drag-and-drop operations, and task CRUD
+ * operations through dialogs.
+ *
+ * Features:
+ * - Kanban board with three columns (To Do, In Progress, Done)
+ * - Task filtering by status and priority
+ * - Global search integration
+ * - Drag-and-drop to change task status
+ * - Create, edit, and delete tasks via dialogs
+ *
+ * @example
+ * ```typescript
+ * // Component automatically loads tasks on init
+ * // Filters are reactive and update automatically
+ *
+ * // Access filtered tasks
+ * const tasks = this.filteredTasks(); // Signal
+ *
+ * // Access tasks by status
+ * const todoTasks = this.todoTasks(); // Signal
+ * ```
+ *
+ * @see {@link TaskFiltersComponent} for filter UI
+ * @see {@link TaskBoardComponent} for Kanban board
+ * @see {@link TaskFormComponent} for task creation/editing
  */
 @Component({
   selector: 'app-tasks',
@@ -44,16 +70,40 @@ export class TasksComponent implements OnInit {
   private dialog = inject(MatDialog);
   private cdr = inject(ChangeDetectorRef);
 
-  // Filter state
+  /**
+   * Current status filter value
+   * Can be 'all', 'todo', 'in_progress', or 'done'
+   */
   readonly statusFilter = signal<TaskStatus | 'all'>('all');
+
+  /**
+   * Current priority filter value
+   * Can be 'all', 'low', 'medium', or 'high'
+   */
   readonly priorityFilter = signal<TaskPriority | 'all'>('all');
+
+  /**
+   * Current search query from global search service
+   */
   readonly searchQuery = this.searchService.searchQuery;
 
-  // Task data
+  /**
+   * All tasks from the task service
+   * Updates reactively when tasks are fetched, created, updated, or deleted
+   */
   readonly allTasks = this.taskService.tasks;
+
+  /**
+   * Loading state from the task service
+   * True when task operations are in progress
+   */
   readonly loading = this.taskService.loading;
 
-  // Computed filtered tasks
+  /**
+   * Computed signal of filtered tasks
+   * Automatically updates when filters or search query changes
+   * Applies status, priority, and search filters
+   */
   readonly filteredTasks = computed(() => {
     let tasks = this.allTasks();
     const status = this.statusFilter();
@@ -72,28 +122,52 @@ export class TasksComponent implements OnInit {
       tasks = tasks.filter(
         (task) =>
           task.title.toLowerCase().includes(search) ||
-          task.description.toLowerCase().includes(search)
+          task.description.toLowerCase().includes(search),
       );
     }
 
     return tasks;
   });
 
-  // Tasks grouped by status
+  /**
+   * Tasks filtered to 'todo' status
+   * Computed from filteredTasks for Kanban column display
+   */
   readonly todoTasks = computed(() =>
-    this.filteredTasks().filter((task) => task.status === 'todo')
-  );
-  readonly inProgressTasks = computed(() =>
-    this.filteredTasks().filter((task) => task.status === 'in_progress')
-  );
-  readonly doneTasks = computed(() =>
-    this.filteredTasks().filter((task) => task.status === 'done')
+    this.filteredTasks().filter((task) => task.status === 'todo'),
   );
 
+  /**
+   * Tasks filtered to 'in_progress' status
+   * Computed from filteredTasks for Kanban column display
+   */
+  readonly inProgressTasks = computed(() =>
+    this.filteredTasks().filter((task) => task.status === 'in_progress'),
+  );
+
+  /**
+   * Tasks filtered to 'done' status
+   * Computed from filteredTasks for Kanban column display
+   */
+  readonly doneTasks = computed(() =>
+    this.filteredTasks().filter((task) => task.status === 'done'),
+  );
+
+  /**
+   * Component initialization
+   * Loads tasks when the component is initialized
+   */
   ngOnInit(): void {
     this.loadTasks();
   }
 
+  /**
+   * Load tasks from the API with current filters
+   *
+   * Fetches tasks from the task service using the current filter state
+   * (status, priority, and search query). Updates the component after
+   * the operation completes.
+   */
   loadTasks(): void {
     const filter: TaskFilter = {
       status: this.statusFilter(),
@@ -110,21 +184,51 @@ export class TasksComponent implements OnInit {
     });
   }
 
+  /**
+   * Handle status filter change
+   *
+   * Updates the status filter and reloads tasks with the new filter.
+   *
+   * @param status - The new status filter value
+   */
   onStatusFilterChange(status: TaskStatus | 'all'): void {
     this.statusFilter.set(status);
     this.loadTasks();
   }
 
+  /**
+   * Handle priority filter change
+   *
+   * Updates the priority filter and reloads tasks with the new filter.
+   *
+   * @param priority - The new priority filter value
+   */
   onPriorityFilterChange(priority: TaskPriority | 'all'): void {
     this.priorityFilter.set(priority);
     this.loadTasks();
   }
 
+  /**
+   * Handle search query change
+   *
+   * Updates the global search query and reloads tasks with the new search.
+   *
+   * @param query - The new search query string
+   */
   onSearchChange(query: string): void {
     this.searchService.setSearchQuery(query);
     this.loadTasks();
   }
 
+  /**
+   * Handle task drag and drop event
+   *
+   * Processes drag-and-drop operations on the Kanban board. If a task
+   * is moved to a different column, updates its status. If moved within
+   * the same column, reorders the tasks.
+   *
+   * @param event - The CDK drag-drop event containing source and destination information
+   */
   onTaskDropped(event: CdkDragDrop<Task[]>): void {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -133,7 +237,7 @@ export class TasksComponent implements OnInit {
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex
+        event.currentIndex,
       );
 
       // Update task status
@@ -150,6 +254,14 @@ export class TasksComponent implements OnInit {
     }
   }
 
+  /**
+   * Open task edit dialog
+   *
+   * Opens the task form dialog in edit mode with the selected task's data.
+   * Reloads tasks after the dialog is closed if changes were made.
+   *
+   * @param task - The task to edit
+   */
   onTaskEdit(task: Task): void {
     const dialogRef = this.dialog.open(TaskFormComponent, {
       width: '90vw',
@@ -164,6 +276,14 @@ export class TasksComponent implements OnInit {
     });
   }
 
+  /**
+   * Delete a task
+   *
+   * Prompts the user for confirmation before deleting a task. If confirmed,
+   * deletes the task and reloads the task list.
+   *
+   * @param task - The task to delete
+   */
   onTaskDelete(task: Task): void {
     if (confirm(`Are you sure you want to delete "${task.title}"?`)) {
       this.taskService.deleteTask(task.id).subscribe({
@@ -177,6 +297,12 @@ export class TasksComponent implements OnInit {
     }
   }
 
+  /**
+   * Open task creation dialog
+   *
+   * Opens the task form dialog in create mode. Reloads tasks after
+   * the dialog is closed if a new task was created.
+   */
   onCreateTask(): void {
     const dialogRef = this.dialog.open(TaskFormComponent, {
       width: '90vw',
@@ -191,10 +317,20 @@ export class TasksComponent implements OnInit {
     });
   }
 
+  /**
+   * Get task status from container ID
+   *
+   * Maps a Kanban column container ID to its corresponding task status.
+   * Used when a task is dropped into a column to determine the new status.
+   *
+   * @param id - The container ID ('todo', 'in_progress', or 'done')
+   * @returns The corresponding task status
+   *
+   * @private
+   */
   private getStatusFromContainerId(id: string): TaskStatus {
     if (id === 'todo') return 'todo';
     if (id === 'in_progress') return 'in_progress';
     return 'done';
   }
 }
-

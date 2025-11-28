@@ -22,7 +22,7 @@
     gap: 8px;
     overflow-x: auto;
     overflow-y: hidden;
-    padding-block: 5px!important;
+    padding-block: 5px !important;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
@@ -96,7 +96,7 @@
       &:nth-child(1) {
         &.active {
           background-color: rgba(25, 118, 210, 0.15);
-          color: #0D47A1;
+          color: #0d47a1;
           font-weight: 600;
           border-color: rgba(25, 118, 210, 0.3);
         }
@@ -106,7 +106,7 @@
       &:nth-child(2) {
         &.active {
           background-color: rgba(56, 142, 60, 0.15);
-          color: #1B5E20;
+          color: #1b5e20;
           font-weight: 600;
           border-color: rgba(56, 142, 60, 0.3);
         }
@@ -116,7 +116,7 @@
       &:nth-child(3) {
         &.active {
           background-color: rgba(255, 111, 0, 0.15);
-          color: #BF360C;
+          color: #bf360c;
           font-weight: 600;
           border-color: rgba(255, 111, 0, 0.3);
         }
@@ -126,7 +126,7 @@
       &:nth-child(4) {
         &.active {
           background-color: rgba(123, 31, 162, 0.15);
-          color: #4A148C;
+          color: #4a148c;
           font-weight: 600;
           border-color: rgba(123, 31, 162, 0.3);
         }
@@ -184,4 +184,3 @@
     margin-top: 0px !important;
   }
 }
-

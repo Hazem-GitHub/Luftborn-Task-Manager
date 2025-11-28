@@ -2,7 +2,9 @@
   margin-bottom: 16px;
   border-left: none;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
   background-color: #ffffff !important;
 
   &:hover {
@@ -164,7 +166,7 @@
         border-width: 0 !important;
         outline: none !important;
       }
-      ::ng-deep .mdc-evolution-chip__action--primary::before{
+      ::ng-deep .mdc-evolution-chip__action--primary::before {
         background: rgba(255, 255, 255, 0.5);
       }
     }
@@ -192,101 +194,99 @@
           font-weight: 500;
         }
 
-      .assignee-name {
-        font-size: 12px;
-        color: #666;
-      }
-    }
-  }
-}
-
-// Remove backgrounds and borders from mat-chip in task cards
-::ng-deep {
-  .task-card {
-    .task-tags {
-      mat-chip {
-        .mdc-evolution-chip__cell--primary,
-        .mdc-evolution-chip__action--primary,
-        .mdc-evolution-chip__surface,
-        .mdc-evolution-chip__ripple,
-        .mdc-evolution-chip__checkmark,
-        .mdc-evolution-chip__checkmark-path {
-          background-color: transparent !important;
-          border: none !important;
-          border-width: 0 !important;
-          border-style: none !important;
-          box-shadow: none !important;
-          outline: none !important;
-          outline-width: 0 !important;
-        }
-
-        // Remove any border from the chip container itself
-        &,
-        .mdc-evolution-chip__surface {
-          border: none !important;
-          border-width: 0 !important;
-          border-style: none !important;
-          outline: none !important;
-          outline-width: 0 !important;
+        .assignee-name {
+          font-size: 12px;
+          color: #666;
         }
       }
     }
-
   }
 
-  // Style mat-menu items (outside task-card scope for proper targeting)
-  .mat-mdc-menu-panel {
-    border-radius: 8px !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-    border: 1px solid rgba(0, 0, 0, 0.08) !important;
-    padding: 4px 0 !important;
-    min-width: 160px !important;
+  // Remove backgrounds and borders from mat-chip in task cards
+  ::ng-deep {
+    .task-card {
+      .task-tags {
+        mat-chip {
+          .mdc-evolution-chip__cell--primary,
+          .mdc-evolution-chip__action--primary,
+          .mdc-evolution-chip__surface,
+          .mdc-evolution-chip__ripple,
+          .mdc-evolution-chip__checkmark,
+          .mdc-evolution-chip__checkmark-path {
+            background-color: transparent !important;
+            border: none !important;
+            border-width: 0 !important;
+            border-style: none !important;
+            box-shadow: none !important;
+            outline: none !important;
+            outline-width: 0 !important;
+          }
 
-    .mat-mdc-menu-item {
-      height: 40px !important;
-      padding: 0 16px !important;
-      font-size: 14px !important;
-      color: #1a1a1a !important;
-      transition: all 0.2s ease !important;
-
-      mat-icon {
-        font-size: 20px !important;
-        width: 20px !important;
-        height: 20px !important;
-        margin-right: 12px !important;
-        color: #5f6368 !important;
+          // Remove any border from the chip container itself
+          &,
+          .mdc-evolution-chip__surface {
+            border: none !important;
+            border-width: 0 !important;
+            border-style: none !important;
+            outline: none !important;
+            outline-width: 0 !important;
+          }
+        }
       }
+    }
 
-      span {
-        font-weight: 500 !important;
-      }
+    // Style mat-menu items (outside task-card scope for proper targeting)
+    .mat-mdc-menu-panel {
+      border-radius: 8px !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+      border: 1px solid rgba(0, 0, 0, 0.08) !important;
+      padding: 4px 0 !important;
+      min-width: 160px !important;
 
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.04) !important;
+      .mat-mdc-menu-item {
+        height: 40px !important;
+        padding: 0 16px !important;
+        font-size: 14px !important;
+        color: #1a1a1a !important;
+        transition: all 0.2s ease !important;
 
         mat-icon {
-          color: #1a1a1a !important;
+          font-size: 20px !important;
+          width: 20px !important;
+          height: 20px !important;
+          margin-right: 12px !important;
+          color: #5f6368 !important;
         }
-      }
 
-      &:focus {
-        outline: none !important;
-        background-color: rgba(0, 0, 0, 0.06) !important;
-      }
+        span {
+          font-weight: 500 !important;
+        }
 
-      // Delete button specific styling - target by checking if it contains delete icon
-      &:last-child {
         &:hover {
-          background-color: rgba(211, 47, 47, 0.08) !important;
-          color: #d32f2f !important;
+          background-color: rgba(0, 0, 0, 0.04) !important;
 
           mat-icon {
+            color: #1a1a1a !important;
+          }
+        }
+
+        &:focus {
+          outline: none !important;
+          background-color: rgba(0, 0, 0, 0.06) !important;
+        }
+
+        // Delete button specific styling - target by checking if it contains delete icon
+        &:last-child {
+          &:hover {
+            background-color: rgba(211, 47, 47, 0.08) !important;
             color: #d32f2f !important;
+
+            mat-icon {
+              color: #d32f2f !important;
+            }
           }
         }
       }
     }
   }
 }
-}
-

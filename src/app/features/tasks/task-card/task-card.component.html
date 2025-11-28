@@ -27,7 +27,11 @@
     <p class="task-description">{{ task.description }}</p>
 
     <div class="task-meta">
-      <span class="due-date" [class.overdue]="isOverdue()" [class.completed]="task.status === 'done'">
+      <span
+        class="due-date"
+        [class.overdue]="isOverdue()"
+        [class.completed]="task.status === 'done'"
+      >
         @if (task.status === 'done' && task.completedAt) {
           <mat-icon class="completed-check-icon">check_circle</mat-icon>
           <span>Completed {{ task.completedAt | relativeTime: 'completed' }}</span>
@@ -55,4 +59,3 @@
     </div>
   </mat-card-content>
 </mat-card>
-

@@ -37,10 +37,7 @@
   <div class="filters-right">
     <mat-form-field appearance="outline" class="priority-filter">
       <mat-label>Priority</mat-label>
-      <mat-select
-        [value]="priorityFilter"
-        (selectionChange)="onPriorityFilterChange($event.value)"
-      >
+      <mat-select [value]="priorityFilter" (selectionChange)="onPriorityFilterChange($event.value)">
         <mat-option value="all">All Priorities</mat-option>
         <mat-option value="high">High</mat-option>
         <mat-option value="medium">Medium</mat-option>
@@ -56,4 +53,3 @@
     }
   </div>
 </div>
-

@@ -3,9 +3,10 @@ import { Observable } from 'rxjs';
 
 /**
  * Simple in-memory cache for HTTP responses
+ * Note: Currently disabled - uncomment if caching is needed
  */
-const cache = new Map<string, { data: any; timestamp: number }>();
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+// const cache = new Map<string, { data: unknown; timestamp: number }>();
+// const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 /**
  * HTTP Cache Interceptor
@@ -14,7 +15,7 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
  */
 export const httpCacheInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
-  next: (req: HttpRequest<unknown>) => Observable<HttpEvent<unknown>>
+  next: (req: HttpRequest<unknown>) => Observable<HttpEvent<unknown>>,
 ): Observable<HttpEvent<unknown>> => {
   // Disable caching for now - always fetch fresh data
   // This ensures components get updated data immediately
@@ -44,4 +45,3 @@ export const httpCacheInterceptor: HttpInterceptorFn = (
   );
   */
 };
-

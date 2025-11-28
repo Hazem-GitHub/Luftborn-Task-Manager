@@ -16,4 +16,3 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './not-found.component.scss',
 })
 export class NotFoundComponent {}
-

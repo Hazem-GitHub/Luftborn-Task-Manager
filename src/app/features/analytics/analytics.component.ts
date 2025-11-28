@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskService } from '../../core/services';
-import { Task } from '../../types';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartType, registerables } from 'chart.js';
 import { Chart } from 'chart.js';
@@ -18,7 +17,23 @@ Chart.register(...registerables);
 
 /**
  * Analytics Component
- * Displays task analytics with charts
+ *
+ * Displays task analytics with interactive charts showing task distribution
+ * by priority and status. Uses Chart.js with ng2-charts for visualization.
+ *
+ * Features:
+ * - Priority distribution pie chart
+ * - Status distribution bar chart
+ * - Reactive updates when tasks change
+ * - Responsive chart sizing
+ *
+ * @example
+ * ```html
+ * <app-analytics></app-analytics>
+ * ```
+ *
+ * @see {@link Chart.js} for chart library
+ * @see {@link BaseChartDirective} for Angular integration
  */
 @Component({
   selector: 'app-analytics',
@@ -102,6 +117,12 @@ export class AnalyticsComponent implements OnInit {
     },
   };
 
+  /**
+   * Component constructor
+   *
+   * Sets up a reactive effect to update charts whenever the tasks signal changes.
+   * This ensures charts stay in sync with task data automatically.
+   */
   constructor() {
     // Use effect to update charts when tasks signal changes
     effect(() => {
@@ -113,6 +134,12 @@ export class AnalyticsComponent implements OnInit {
     });
   }
 
+  /**
+   * Component initialization
+   *
+   * Loads tasks if not already available, then updates the charts.
+   * If tasks are already loaded, updates charts immediately.
+   */
   ngOnInit(): void {
     // Load tasks if not already loaded
     if (this.tasks().length === 0) {
@@ -132,23 +159,36 @@ export class AnalyticsComponent implements OnInit {
     }
   }
 
+  /**
+   * Update chart data based on current tasks
+   *
+   * Calculates task counts by priority and status, then updates
+   * both chart datasets. Creates new objects to trigger Angular
+   * change detection.
+   *
+   * @private
+   */
   private updateCharts(): void {
     const tasks = this.tasks();
-    
+
     // Update priority chart
     const priorityCounts = {
       high: tasks.filter((t) => t.priority === 'high').length,
       medium: tasks.filter((t) => t.priority === 'medium').length,
       low: tasks.filter((t) => t.priority === 'low').length,
     };
-    
+
     // Create new object to trigger change detection
     this.priorityChartData = {
       labels: ['High', 'Medium', 'Low'],
       datasets: [
         {
           data: [priorityCounts.high, priorityCounts.medium, priorityCounts.low],
-          backgroundColor: ['rgba(211, 47, 47, 0.8)', 'rgba(255, 111, 0, 0.8)', 'rgba(25, 118, 210, 0.8)'],
+          backgroundColor: [
+            'rgba(211, 47, 47, 0.8)',
+            'rgba(255, 111, 0, 0.8)',
+            'rgba(25, 118, 210, 0.8)',
+          ],
           borderColor: ['rgba(211, 47, 47, 1)', 'rgba(255, 111, 0, 1)', 'rgba(25, 118, 210, 1)'],
           borderWidth: 1,
         },
@@ -161,7 +201,7 @@ export class AnalyticsComponent implements OnInit {
       in_progress: tasks.filter((t) => t.status === 'in_progress').length,
       done: tasks.filter((t) => t.status === 'done').length,
     };
-    
+
     // Create new object to trigger change detection
     this.statusChartData = {
       labels: ['To Do', 'In Progress', 'Done'],
@@ -174,15 +214,10 @@ export class AnalyticsComponent implements OnInit {
             'rgba(255, 111, 0, 0.8)',
             'rgba(56, 142, 60, 0.8)',
           ],
-          borderColor: [
-            'rgba(25, 118, 210, 1)',
-            'rgba(255, 111, 0, 1)',
-            'rgba(56, 142, 60, 1)',
-          ],
+          borderColor: ['rgba(25, 118, 210, 1)', 'rgba(255, 111, 0, 1)', 'rgba(56, 142, 60, 1)'],
           borderWidth: 1,
         },
       ],
     };
   }
 }
-
