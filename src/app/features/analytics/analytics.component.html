@@ -1,32 +1,96 @@
 <div class="analytics-page">
-  <h1 class="page-title">Analytics</h1>
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">Analytics</h1>
+    </div>
+  </div>
 
   @if (loading()) {
     <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
       <p>Loading analytics...</p>
     </div>
   } @else {
-    <div class="charts-grid">
-      <div class="chart-card">
-        <h2>Tasks by Priority</h2>
-        <canvas
-          baseChart
-          [data]="priorityChartData"
-          [type]="priorityChartType"
-          [options]="priorityChartOptions"
-        >
-        </canvas>
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+      <div class="summary-card total">
+        <div class="card-icon">
+          <mat-icon>list_alt</mat-icon>
+        </div>
+        <div class="card-content">
+          <div class="card-label">Total Tasks</div>
+          <div class="card-value">{{ totalTasks() }}</div>
+        </div>
       </div>
 
-      <div class="chart-card">
-        <h2>Tasks by Status</h2>
-        <canvas
-          baseChart
-          [data]="statusChartData"
-          [type]="statusChartType"
-          [options]="statusChartOptions"
-        >
-        </canvas>
+      <div class="summary-card completed">
+        <div class="card-icon">
+          <mat-icon>check_circle</mat-icon>
+        </div>
+        <div class="card-content">
+          <div class="card-label">Completed</div>
+          <div class="card-value">{{ completedTasks() }}</div>
+          <div class="card-percentage">{{ completionRate() }}%</div>
+        </div>
+      </div>
+
+      <div class="summary-card in-progress">
+        <div class="card-icon">
+          <mat-icon>sync</mat-icon>
+        </div>
+        <div class="card-content">
+          <div class="card-label">In Progress</div>
+          <div class="card-value">{{ inProgressTasks() }}</div>
+        </div>
+      </div>
+
+      <div class="summary-card overdue">
+        <div class="card-icon">
+          <mat-icon>error_outline</mat-icon>
+        </div>
+        <div class="card-content">
+          <div class="card-label">Overdue</div>
+          <div class="card-value">{{ overdueTasks() }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Grid -->
+    <div class="charts-grid">
+      <div class="chart-card priority-card">
+        <div class="chart-header">
+          <div class="chart-title-section">
+            <h2>Tasks by Priority</h2>
+          </div>
+          <div class="chart-subtitle">Distribution across priority levels</div>
+        </div>
+        <div class="chart-container">
+          <canvas
+            baseChart
+            [data]="priorityChartData"
+            [type]="priorityChartType"
+            [options]="priorityChartOptions"
+          >
+          </canvas>
+        </div>
+      </div>
+
+      <div class="chart-card status-card">
+        <div class="chart-header">
+          <div class="chart-title-section">
+            <h2>Tasks by Status</h2>
+          </div>
+          <div class="chart-subtitle">Current workflow distribution</div>
+        </div>
+        <div class="chart-container">
+          <canvas
+            baseChart
+            [data]="statusChartData"
+            [type]="statusChartType"
+            [options]="statusChartOptions"
+          >
+          </canvas>
+        </div>
       </div>
     </div>
   }

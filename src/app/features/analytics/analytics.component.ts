@@ -5,12 +5,16 @@ import {
   ChangeDetectorRef,
   inject,
   effect,
+  computed,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TaskService } from '../../core/services';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartType, registerables } from 'chart.js';
 import { Chart } from 'chart.js';
+import { isTaskOverdue } from '../../shared/utils/task.utils';
 
 // Register all Chart.js components
 Chart.register(...registerables);
@@ -38,7 +42,7 @@ Chart.register(...registerables);
 @Component({
   selector: 'app-analytics',
   standalone: true,
-  imports: [CommonModule, BaseChartDirective],
+  imports: [CommonModule, BaseChartDirective, MatIconModule, MatProgressSpinnerModule],
   templateUrl: './analytics.component.html',
   styleUrl: './analytics.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -49,6 +53,19 @@ export class AnalyticsComponent implements OnInit {
 
   readonly tasks = this.taskService.tasks;
   readonly loading = this.taskService.loading;
+
+  // Computed summary statistics
+  readonly totalTasks = computed(() => this.tasks().length);
+  readonly completedTasks = computed(() => this.tasks().filter((t) => t.status === 'done').length);
+  readonly inProgressTasks = computed(
+    () => this.tasks().filter((t) => t.status === 'in_progress').length,
+  );
+  readonly overdueTasks = computed(() => this.tasks().filter((t) => isTaskOverdue(t)).length);
+  readonly completionRate = computed(() => {
+    const total = this.totalTasks();
+    if (total === 0) return 0;
+    return Math.round((this.completedTasks() / total) * 100);
+  });
 
   // Priority Chart
   priorityChartType: ChartType = 'pie';
@@ -64,14 +81,40 @@ export class AnalyticsComponent implements OnInit {
   priorityChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 1000,
+    },
     plugins: {
       legend: {
         position: 'bottom',
         labels: {
           font: {
-            size: 12,
+            size: 13,
           },
-          padding: 15,
+          padding: 20,
+          usePointStyle: true,
+          pointStyle: 'circle',
+        },
+      },
+      tooltip: {
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        padding: 12,
+        titleFont: {
+          size: 14,
+        },
+        bodyFont: {
+          size: 13,
+        },
+        displayColors: true,
+        callbacks: {
+          label: (context) => {
+            const label = context.label || '';
+            const value = (context.parsed as number) || 0;
+            const dataset = context.dataset.data as number[];
+            const total = dataset.reduce((a: number, b: number) => a + b, 0);
+            const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : '0';
+            return `${label}: ${value} (${percentage}%)`;
+          },
         },
       },
     },
@@ -92,6 +135,10 @@ export class AnalyticsComponent implements OnInit {
   statusChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 1000,
+      easing: 'easeOutQuart',
+    },
     scales: {
       y: {
         beginAtZero: true,
@@ -100,19 +147,38 @@ export class AnalyticsComponent implements OnInit {
           font: {
             size: 12,
           },
+          color: '#5f6368',
+        },
+        grid: {
+          color: 'rgba(0, 0, 0, 0.05)',
         },
       },
       x: {
         ticks: {
           font: {
-            size: 12,
+            size: 13,
           },
+          color: '#5f6368',
+        },
+        grid: {
+          display: false,
         },
       },
     },
     plugins: {
       legend: {
         display: false,
+      },
+      tooltip: {
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        padding: 12,
+        titleFont: {
+          size: 14,
+        },
+        bodyFont: {
+          size: 13,
+        },
+        displayColors: true,
       },
     },
   };
