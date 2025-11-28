@@ -9,6 +9,10 @@ jobs:
   deploy:
     name: Deploy Application
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: production
       url: ${{ steps.deploy.outputs.url }}
@@ -16,6 +20,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -51,6 +57,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./${{ steps.find-output.outputs.output_dir }}
           cname: false
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
 
       # Alternative: Deploy to Vercel (uncomment and configure if needed)
       # - name: Deploy to Vercel
