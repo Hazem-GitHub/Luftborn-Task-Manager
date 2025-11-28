@@ -1,0 +1,59 @@
+<div class="filters-section">
+  <div class="status-tabs">
+    <button
+      [class.active]="statusFilter === 'all'"
+      (click)="onStatusFilterChange('all')"
+      class="filter-tab"
+    >
+      <mat-icon>apps</mat-icon>
+      <span>All</span>
+    </button>
+    <button
+      [class.active]="statusFilter === 'todo'"
+      (click)="onStatusFilterChange('todo')"
+      class="filter-tab"
+    >
+      <mat-icon>radio_button_unchecked</mat-icon>
+      <span>To Do</span>
+    </button>
+    <button
+      [class.active]="statusFilter === 'in_progress'"
+      (click)="onStatusFilterChange('in_progress')"
+      class="filter-tab"
+    >
+      <mat-icon>sync</mat-icon>
+      <span>In Progress</span>
+    </button>
+    <button
+      [class.active]="statusFilter === 'done'"
+      (click)="onStatusFilterChange('done')"
+      class="filter-tab"
+    >
+      <mat-icon>check_circle</mat-icon>
+      <span>Done</span>
+    </button>
+  </div>
+
+  <div class="filters-right">
+    <mat-form-field appearance="outline" class="priority-filter">
+      <mat-label>Priority</mat-label>
+      <mat-select
+        [value]="priorityFilter"
+        (selectionChange)="onPriorityFilterChange($event.value)"
+      >
+        <mat-option value="all">All Priorities</mat-option>
+        <mat-option value="high">High</mat-option>
+        <mat-option value="medium">Medium</mat-option>
+        <mat-option value="low">Low</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    @if (showNewTaskButton) {
+      <button mat-raised-button color="primary" class="new-task-btn" (click)="onCreateTask()">
+        <mat-icon>add</mat-icon>
+        New Task
+      </button>
+    }
+  </div>
+</div>
+

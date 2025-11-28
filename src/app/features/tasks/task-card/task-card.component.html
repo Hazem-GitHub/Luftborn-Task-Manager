@@ -1,0 +1,58 @@
+<mat-card
+  class="task-card"
+  [class.overdue]="isOverdue()"
+  [class.completed]="task.status === 'done'"
+>
+  <mat-card-content>
+    <div class="card-header">
+      <span class="priority-badge" [class]="'priority-' + task.priority">
+        {{ task.priority | priorityLabel }}
+      </span>
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="onEdit()">
+          <mat-icon>edit</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item (click)="onDelete()">
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+    </div>
+
+    <h3 class="task-title">{{ task.title }}</h3>
+    <p class="task-description">{{ task.description }}</p>
+
+    <div class="task-meta">
+      <span class="due-date" [class.overdue]="isOverdue()" [class.completed]="task.status === 'done'">
+        @if (task.status === 'done' && task.completedAt) {
+          <mat-icon class="completed-check-icon">check_circle</mat-icon>
+          <span>Completed {{ task.completedAt | relativeTime: 'completed' }}</span>
+        } @else if (isOverdue()) {
+          <mat-icon class="overdue-icon">error</mat-icon>
+          <span>{{ task.dueDate | relativeTime }}</span>
+        } @else {
+          <mat-icon class="calendar-icon">event</mat-icon>
+          <span>{{ task.dueDate | relativeTime }}</span>
+        }
+      </span>
+    </div>
+
+    <div class="task-tags">
+      @for (tag of task.tags; track tag) {
+        <mat-chip>{{ tag }}</mat-chip>
+      }
+    </div>
+
+    <div class="task-footer">
+      <div class="assignee">
+        <div class="assignee-avatar">{{ task.assignee.avatar }}</div>
+        <span class="assignee-name">@{{ task.assignee.name.split(' ')[0] }}</span>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+

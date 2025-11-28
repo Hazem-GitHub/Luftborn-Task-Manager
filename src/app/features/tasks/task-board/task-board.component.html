@@ -1,0 +1,32 @@
+@if (loading) {
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+} @else {
+  <div class="kanban-board" cdkDropListGroup>
+    <app-kanban-column
+      status="todo"
+      [tasks]="todoTasks"
+      (taskDropped)="onTaskDropped($event)"
+      (taskEdit)="onTaskEdit($event)"
+      (taskDelete)="onTaskDelete($event)"
+    ></app-kanban-column>
+
+    <app-kanban-column
+      status="in_progress"
+      [tasks]="inProgressTasks"
+      (taskDropped)="onTaskDropped($event)"
+      (taskEdit)="onTaskEdit($event)"
+      (taskDelete)="onTaskDelete($event)"
+    ></app-kanban-column>
+
+    <app-kanban-column
+      status="done"
+      [tasks]="doneTasks"
+      (taskDropped)="onTaskDropped($event)"
+      (taskEdit)="onTaskEdit($event)"
+      (taskDelete)="onTaskDelete($event)"
+    ></app-kanban-column>
+  </div>
+}
+

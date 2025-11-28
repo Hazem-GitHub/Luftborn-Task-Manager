@@ -1,0 +1,28 @@
+<div class="tasks-page">
+  <div class="page-header">
+    <h1 class="page-title">Tasks</h1>
+    <button mat-raised-button color="primary" class="new-task-btn" (click)="onCreateTask()">
+      <mat-icon>add</mat-icon>
+      New Task
+    </button>
+  </div>
+
+  <app-task-filters
+    [statusFilter]="statusFilter()"
+    [priorityFilter]="priorityFilter()"
+    [showNewTaskButton]="false"
+    (statusFilterChange)="onStatusFilterChange($event)"
+    (priorityFilterChange)="onPriorityFilterChange($event)"
+  ></app-task-filters>
+
+  <app-task-board
+    [todoTasks]="todoTasks()"
+    [inProgressTasks]="inProgressTasks()"
+    [doneTasks]="doneTasks()"
+    [loading]="loading()"
+    (taskDropped)="onTaskDropped($event)"
+    (taskEdit)="onTaskEdit($event)"
+    (taskDelete)="onTaskDelete($event)"
+  ></app-task-board>
+</div>
+

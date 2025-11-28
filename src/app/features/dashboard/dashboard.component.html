@@ -1,0 +1,39 @@
+<div class="dashboard">
+  <h1 class="page-title">Dashboard</h1>
+
+  <!-- Statistics Cards -->
+  @if (statisticsLoading()) {
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else {
+    <div class="statistics-grid">
+      @for (stat of statistics(); track stat.id) {
+        <app-statistics-card [statistic]="stat"></app-statistics-card>
+      }
+    </div>
+  }
+
+  <!-- Tasks Kanban Board -->
+  <div class="tasks-section">
+    <app-task-filters
+      [statusFilter]="statusFilter()"
+      [priorityFilter]="priorityFilter()"
+      [showNewTaskButton]="true"
+      (statusFilterChange)="onStatusFilterChange($event)"
+      (priorityFilterChange)="onPriorityFilterChange($event)"
+      (newTaskClick)="onCreateTask()"
+    ></app-task-filters>
+
+    <app-task-board
+      [todoTasks]="todoTasks()"
+      [inProgressTasks]="inProgressTasks()"
+      [doneTasks]="doneTasks()"
+      [loading]="tasksLoading()"
+      (taskDropped)="onTaskDropped($event)"
+      (taskEdit)="onTaskEdit($event)"
+      (taskDelete)="onTaskDelete($event)"
+    ></app-task-board>
+  </div>
+</div>
+

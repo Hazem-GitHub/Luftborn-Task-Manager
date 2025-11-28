@@ -1,0 +1,56 @@
+<mat-toolbar class="header-toolbar">
+  <div class="header-left">
+    <button class="menu-toggle" (click)="onMenuToggle()" aria-label="Toggle menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-icon class="app-icon">assignment</mat-icon>
+    <span class="app-title">Task Manager</span>
+  </div>
+
+  <div class="header-center">
+    <mat-form-field appearance="outline" class="search-field">
+      <input
+        matInput
+        type="text"
+        placeholder="Search tasks..."
+        [value]="searchQuery()"
+        (input)="onSearchChange($any($event.target).value)"
+      />
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div class="header-right">
+    <button class="mobile-search" (click)="onSearchToggle()" aria-label="Search">
+      <mat-icon>{{ showMobileSearch() ? 'close' : 'search' }}</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Notifications">
+      <mat-icon>notifications</mat-icon>
+    </button>
+    <div class="user-avatar" [attr.aria-label]="currentUser.name">
+      {{ currentUser.avatar }}
+    </div>
+  </div>
+</mat-toolbar>
+
+<!-- Collapsible mobile search -->
+<div class="mobile-search-container" [class.expanded]="showMobileSearch()">
+  <mat-form-field appearance="outline" class="mobile-search-field">
+    <input
+      matInput
+      type="text"
+      placeholder="Search tasks..."
+      #mobileSearchInput
+      [value]="searchQuery()"
+      (input)="onSearchChange($any($event.target).value)"
+      (keydown.escape)="onSearchToggle()"
+    />
+    <mat-icon matPrefix>search</mat-icon>
+    @if (searchQuery()) {
+      <button mat-icon-button matSuffix (click)="clearSearch()" aria-label="Clear">
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </mat-form-field>
+</div>
+

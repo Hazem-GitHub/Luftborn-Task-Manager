@@ -1,0 +1,25 @@
+<nav class="sidebar" [class.open]="isOpen">
+  <div class="sidebar-content">
+    <mat-nav-list>
+      @for (item of navigationItems; track item.route) {
+        <a
+          mat-list-item
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.route === '/dashboard' }"
+          [style.--item-color]="item.color"
+          [style.--item-color-rgb]="getColorRgb(item.color)"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    </mat-nav-list>
+
+    <button mat-raised-button color="primary" class="new-task-btn" (click)="createNewTask()">
+      <mat-icon>add</mat-icon>
+      New Task
+    </button>
+  </div>
+</nav>
+

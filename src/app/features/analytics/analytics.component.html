@@ -1,0 +1,30 @@
+<div class="analytics-page">
+  <h1 class="page-title">Analytics</h1>
+
+  @if (loading()) {
+    <div class="loading-container">
+      <p>Loading analytics...</p>
+    </div>
+  } @else {
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h2>Tasks by Priority</h2>
+        <canvas baseChart
+          [data]="priorityChartData"
+          [type]="priorityChartType"
+          [options]="priorityChartOptions">
+        </canvas>
+      </div>
+
+      <div class="chart-card">
+        <h2>Tasks by Status</h2>
+        <canvas baseChart
+          [data]="statusChartData"
+          [type]="statusChartType"
+          [options]="statusChartOptions">
+        </canvas>
+      </div>
+    </div>
+  }
+</div>
+

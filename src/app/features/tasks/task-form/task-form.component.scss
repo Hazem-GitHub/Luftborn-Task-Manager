@@ -1,0 +1,490 @@
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding-top: 16px;
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  mat-form-field {
+    width: 100%;
+
+    ::ng-deep {
+      .mat-mdc-text-field-wrapper {
+        background-color: rgba(0, 0, 0, 0.04);
+        border-radius: 12px;
+        transition: all 0.2s ease;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        overflow: visible;
+      }
+
+      .mat-mdc-form-field-focus-overlay {
+        background-color: transparent !important;
+        opacity: 0 !important;
+      }
+
+      &.mat-focused .mat-mdc-text-field-wrapper {
+        background-color: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-color: rgba(0, 0, 0, 0.16);
+      }
+
+      // Remove any blue focus indicators
+      &.mat-focused {
+        .mat-mdc-form-field-outline-thick {
+          display: none !important;
+        }
+      }
+
+      .mat-mdc-form-field-infix {
+        padding: 10px 14px !important;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+      }
+
+      // Select field specific padding
+      .mat-mdc-select-trigger {
+        padding: 0;
+        min-height: auto;
+      }
+
+      // Suffix container styling for datepicker
+      .mat-mdc-form-field-suffix {
+        padding-right: 12px;
+        padding-left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        position: relative;
+        width: auto;
+        min-width: 40px;
+      }
+      .mat-mdc-form-field-icon-suffix {
+        min-width: 40px;
+        min-height: 36px;
+      }
+
+      // Prefix container styling
+      .mat-mdc-form-field-prefix {
+        padding-left: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      // Hide floating labels
+      .mat-mdc-form-field-label-wrapper {
+        display: none !important;
+      }
+
+      .mat-mdc-form-field-label {
+        display: none !important;
+      }
+
+      input.mat-mdc-input-element,
+      textarea.mat-mdc-input-element {
+        color: #1a1a1a;
+        font-size: 13px !important;
+        font-weight: 400;
+        line-height: 1.4;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+
+        &::placeholder {
+          color: #9aa0a6;
+          font-size: 13px;
+          opacity: 0.8;
+        }
+
+        &:focus {
+          border: none !important;
+          outline: none !important;
+          box-shadow: none !important;
+        }
+      }
+
+      // Textarea specific styling
+      textarea.mat-mdc-input-element {
+        resize: vertical;
+        min-height: 80px;
+        line-height: 1.5;
+        padding-top: 2px;
+      }
+
+      .mat-mdc-select {
+        font-size: 13px !important;
+        font-weight: 400;
+        color: #1a1a1a;
+      }
+
+      .mat-mdc-select-placeholder {
+        color: #9aa0a6;
+        font-size: 13px;
+      }
+
+      // Select arrow icon styling
+      .mat-mdc-select-arrow-wrapper {
+        .mat-mdc-select-arrow {
+          color: #5f6368;
+          font-size: 20px;
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .mat-mdc-form-field-icon-prefix {
+        color: #5f6368;
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+      }
+
+      .mat-mdc-form-field-icon-suffix {
+        color: #5f6368;
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+        margin-left: 8px;
+        padding: 0;
+      }
+
+      // Datepicker toggle styling - ensure it's inside the field
+      .mat-datepicker-toggle {
+        color: #5f6368;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .mat-icon-button {
+          width: 24px;
+          height: 24px;
+          padding: 0;
+          line-height: 24px;
+          margin: 0;
+
+          .mat-icon {
+            font-size: 20px;
+            width: 20px;
+            height: 20px;
+            color: #5f6368;
+            transition: color 0.2s ease;
+          }
+        }
+
+        &:hover .mat-icon-button {
+          background-color: rgba(0, 0, 0, 0.04);
+          border-radius: 4px;
+
+          .mat-icon {
+            color: #1a1a1a;
+          }
+        }
+      }
+
+      // Hide outline and use border instead
+      .mat-mdc-form-field-outline {
+        display: none !important;
+      }
+
+      // Remove any blue underline or focus indicators
+      .mat-mdc-form-field-outline-thick {
+        display: none !important;
+      }
+
+      // Remove any ripple effects that might show blue
+      .mat-mdc-form-field-ripple {
+        display: none !important;
+      }
+
+      // Hide any autofill or browser indicators
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.95) inset !important;
+        -webkit-text-fill-color: #1a1a1a !important;
+      }
+
+      // Error state
+      &.mat-form-field-invalid {
+        .mat-mdc-text-field-wrapper {
+          border-color: rgba(211, 47, 47, 0.4);
+        }
+      }
+
+      // Subscript (error text)
+      .mat-mdc-form-field-subscript-wrapper {
+        margin-top: 4px!important;
+      }
+
+      .mat-mdc-form-field-error {
+        color: rgba(211, 47, 47, 0.9);
+        font-size: 11px;
+      }
+
+      .mat-mdc-form-field-infix{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 4px;
+
+      }
+
+      // Chip input field styling
+      .mat-mdc-chip-input {
+        font-size: 13px !important;
+        color: #1a1a1a;
+        max-height: max-content;
+        &::placeholder {
+          color: #9aa0a6;
+          font-size: 13px;
+          opacity: 0.8;
+        }
+      }
+
+      // Chip grid styling
+      .mat-mdc-chip-grid[tabindex="0"] {
+        min-height: 32px;
+        padding: 4px 0;
+      }
+      .mat-mdc-chip-grid[tabindex="-1"] {
+        min-height: 0;
+        padding: 0;
+      }
+
+      // Chip row styling
+      .mat-mdc-chip-row {
+        font-size: 12px;
+        height: 28px;
+        border-radius: 16px;
+        background-color: rgba(0, 0, 0, 0.06);
+        color: #1a1a1a;
+
+        .mat-mdc-chip-remove {
+          color: #5f6368;
+
+          &:hover {
+            color: #1a1a1a;
+          }
+        }
+      }
+    }
+  }
+}
+
+::ng-deep .mat-form-field-invalid .mat-mdc-form-field-subscript-wrapper {
+  margin-top: 4px !important;
+  min-height: 16px !important;
+}
+
+// Modern dialog styling
+::ng-deep .mat-mdc-dialog-container {
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+  overflow: hidden;
+  padding: 0 !important;
+  background-color: #ffffff !important;
+
+  @media (max-width: 600px) {
+    max-width: 95vw !important;
+    margin: 16px !important;
+    border-radius: 12px !important;
+  }
+
+  .mat-mdc-dialog-surface {
+    border-radius: 16px !important;
+    overflow: hidden;
+    background-color: #ffffff !important;
+  }
+}
+
+// Dialog title with icon
+.dialog-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 24px 20px 24px;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+  .title-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  span {
+    flex: 1;
+  }
+
+  @media (max-width: 600px) {
+    padding: 20px 20px 16px 20px;
+    font-size: 20px;
+
+    .title-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+// Responsive dialog content
+::ng-deep .mat-mdc-dialog-container {
+  .mat-mdc-dialog-content {
+    padding: 24px;
+    max-height: 70vh;
+    overflow-y: auto;
+
+    @media (max-width: 600px) {
+      padding: 20px;
+      max-height: 65vh;
+    }
+
+    // Custom scrollbar
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+
+  .mat-mdc-dialog-actions {
+    padding: 16px 24px 24px !important;
+    margin: 0 !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    gap: 12px !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+    background-color: rgba(0, 0, 0, 0.02) !important;
+    min-height: auto !important;
+
+    &.dialog-actions {
+      padding: 16px 24px 24px !important;
+    }
+
+    .cancel-btn {
+      color: #5f6368 !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      padding: 8px 16px !important;
+      border-radius: 8px !important;
+      transition: all 0.2s ease !important;
+      margin: 0 !important;
+      min-width: auto !important;
+      height: 40px !important;
+      border: none !important;
+      background: transparent !important;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04) !important;
+        color: #1a1a1a !important;
+      }
+
+      &:focus {
+        outline: none !important;
+        box-shadow: none !important;
+      }
+    }
+
+    .submit-btn {
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      min-width: 120px !important;
+      height: 40px !important;
+      border-radius: 8px !important;
+      background-color: #1a1a1a !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      margin: 0 !important;
+      border: none !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 6px !important;
+
+      &:hover:not([disabled]) {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+        background-color: #2a2a2a !important;
+      }
+
+      &:active:not([disabled]) {
+        transform: translateY(0) !important;
+      }
+
+      &:focus {
+        outline: none !important;
+      }
+
+      &[disabled] {
+        opacity: 0.5 !important;
+        background-color: rgba(0, 0, 0, 0.12) !important;
+        color: rgba(0, 0, 0, 0.38) !important;
+        cursor: not-allowed !important;
+        transform: none !important;
+        box-shadow: none !important;
+      }
+
+      mat-icon {
+        margin: 0 !important;
+        font-size: 18px !important;
+        width: 18px !important;
+        height: 18px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+    }
+
+    @media (max-width: 600px) {
+      padding: 16px 20px 20px !important;
+      flex-direction: column-reverse !important;
+      gap: 12px !important;
+
+      .cancel-btn,
+      .submit-btn {
+        width: 100% !important;
+        margin: 0 !important;
+        height: 44px !important;
+      }
+    }
+  }
+}
+

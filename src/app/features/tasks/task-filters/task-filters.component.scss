@@ -1,0 +1,187 @@
+.filters-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 20px 24px;
+    gap: 20px;
+  }
+
+  .status-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-block: 5px!important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+
+    // Hide scrollbar on mobile but keep functionality
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 2px;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    @media (min-width: 768px) {
+      overflow-x: visible;
+      padding-bottom: 0;
+      gap: 10px;
+    }
+
+    .filter-tab {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      background: #ffffff;
+      color: #5f6368;
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      white-space: nowrap;
+      flex-shrink: 0;
+      min-width: fit-content;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+      @media (min-width: 768px) {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        color: inherit;
+      }
+
+      span {
+        display: flex;
+        align-items: center;
+      }
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      // All tab - Light blue (only when active)
+      &:nth-child(1) {
+        &.active {
+          background-color: rgba(25, 118, 210, 0.15);
+          color: #0D47A1;
+          font-weight: 600;
+          border-color: rgba(25, 118, 210, 0.3);
+        }
+      }
+
+      // To Do tab - Light green (only when active)
+      &:nth-child(2) {
+        &.active {
+          background-color: rgba(56, 142, 60, 0.15);
+          color: #1B5E20;
+          font-weight: 600;
+          border-color: rgba(56, 142, 60, 0.3);
+        }
+      }
+
+      // In Progress tab - Light orange (only when active)
+      &:nth-child(3) {
+        &.active {
+          background-color: rgba(255, 111, 0, 0.15);
+          color: #BF360C;
+          font-weight: 600;
+          border-color: rgba(255, 111, 0, 0.3);
+        }
+      }
+
+      // Done tab - Light purple (only when active)
+      &:nth-child(4) {
+        &.active {
+          background-color: rgba(123, 31, 162, 0.15);
+          color: #4A148C;
+          font-weight: 600;
+          border-color: rgba(123, 31, 162, 0.3);
+        }
+      }
+    }
+  }
+
+  .filters-right {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      align-items: center;
+      gap: 16px;
+      width: auto;
+    }
+
+    .priority-filter {
+      width: 100%;
+
+      @media (min-width: 768px) {
+        width: 220px;
+        flex-shrink: 0;
+      }
+
+      ::ng-deep {
+        .mat-mdc-text-field-wrapper {
+          background-color: #ffffff;
+          border-radius: 8px;
+        }
+
+        .mat-mdc-form-field-label {
+          color: #5f6368;
+          font-weight: 500;
+        }
+      }
+    }
+
+    button {
+      width: 100%;
+
+      @media (min-width: 768px) {
+        width: auto;
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .mat-mdc-form-field-subscript-wrapper {
+    height: 0px !important;
+    margin-top: 0px !important;
+  }
+}
+

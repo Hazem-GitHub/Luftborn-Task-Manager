@@ -1,0 +1,23 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+
+.kanban-board {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 16px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  @media (min-width: 1024px) {
+    overflow-x: visible;
+  }
+}
+

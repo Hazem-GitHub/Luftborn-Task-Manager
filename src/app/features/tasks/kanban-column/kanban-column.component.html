@@ -1,0 +1,22 @@
+<div class="kanban-column" [class.status-todo]="status === 'todo'" [class.status-in-progress]="status === 'in_progress'" [class.status-done]="status === 'done'" cdkDropList [cdkDropListData]="tasks" [id]="status" (cdkDropListDropped)="onTaskDropped($event)">
+  <div class="column-header">
+    <div class="column-title-wrapper">
+      <mat-icon class="column-icon">{{ getStatusIcon() }}</mat-icon>
+      <h3 class="column-title">{{ getStatusLabel() }}</h3>
+    </div>
+    <span class="task-count">{{ tasks.length }}</span>
+  </div>
+
+  <div class="column-content">
+    @for (task of tasks; track trackByTaskId($index, task)) {
+      <div cdkDrag [cdkDragData]="task" class="task-drag-item">
+        <app-task-card
+          [task]="task"
+          (edit)="onTaskEdit($event)"
+          (delete)="onTaskDelete($event)"
+        ></app-task-card>
+      </div>
+    }
+  </div>
+</div>
+

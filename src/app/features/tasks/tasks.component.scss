@@ -1,0 +1,43 @@
+.tasks-page {
+  padding: 0 16px;
+
+  @media (min-width: 768px) {
+    padding: 0 24px;
+  }
+
+  .page-header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      gap: 0;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0;
+      color: #333;
+
+      @media (min-width: 768px) {
+        font-size: 28px;
+      }
+    }
+
+    button {
+      width: 100%;
+
+      @media (min-width: 768px) {
+        width: auto;
+      }
+    }
+  }
+
+}
+

@@ -1,0 +1,71 @@
+name: CD
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy Application
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.url }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Find build output directory
+        id: find-output
+        run: |
+          if [ -d "dist/task-manager/browser" ]; then
+            echo "output_dir=dist/task-manager/browser" >> $GITHUB_OUTPUT
+          elif [ -d "dist/browser" ]; then
+            echo "output_dir=dist/browser" >> $GITHUB_OUTPUT
+          else
+            echo "output_dir=dist" >> $GITHUB_OUTPUT
+          fi
+          echo "Found output directory: ${{ steps.find-output.outputs.output_dir }}"
+
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./${{ steps.find-output.outputs.output_dir }}
+          cname: false
+
+      # Alternative: Deploy to Vercel (uncomment and configure if needed)
+      # - name: Deploy to Vercel
+      #   uses: amondnet/vercel-action@v25
+      #   with:
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+      #     vercel-args: '--prod'
+
+      # Alternative: Deploy to Netlify (uncomment and configure if needed)
+      # - name: Deploy to Netlify
+      #   uses: netlify/actions/cli@master
+      #   with:
+      #     args: deploy --dir=./dist/task-manager/browser --prod
+      #   env:
+      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

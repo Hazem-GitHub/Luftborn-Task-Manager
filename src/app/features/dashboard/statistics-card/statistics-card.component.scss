@@ -1,0 +1,128 @@
+.statistics-card {
+  height: 100%;
+  border-radius: 16px !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  background-color: #ffffff !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+  }
+
+  mat-card-content {
+    padding: 24px;
+    position: relative;
+
+    @media (max-width: 600px) {
+      padding: 20px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+
+      .icon-wrapper {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid;
+        flex-shrink: 0;
+        transition: all 0.2s ease;
+
+        .icon {
+          font-size: 24px;
+          width: 24px;
+          height: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
+      .title {
+        font-size: 14px;
+        color: #5f6368;
+        font-weight: 500;
+        letter-spacing: 0.2px;
+        flex: 1;
+      }
+    }
+
+    .card-value {
+      font-size: 36px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+
+      @media (max-width: 600px) {
+        font-size: 32px;
+      }
+    }
+
+    .card-change {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      width: fit-content;
+      transition: all 0.2s ease;
+
+      .change-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+
+      .change-value {
+        font-weight: 600;
+        font-size: 13px;
+      }
+
+      .change-label {
+        color: rgba(0, 0, 0, 0.6);
+        font-size: 12px;
+      }
+
+      &.change-positive {
+        color: rgba(56, 142, 60, 0.9);
+        background-color: rgba(56, 142, 60, 0.1);
+
+        .change-icon {
+          color: rgba(56, 142, 60, 0.9);
+        }
+      }
+
+      &.change-negative {
+        color: rgba(211, 47, 47, 0.9);
+        background-color: rgba(211, 47, 47, 0.1);
+
+        .change-icon {
+          color: rgba(211, 47, 47, 0.9);
+        }
+      }
+
+      &.change-neutral {
+        color: #5f6368;
+        background-color: rgba(0, 0, 0, 0.04);
+
+        .change-icon {
+          color: #5f6368;
+        }
+      }
+    }
+  }
+}
+
